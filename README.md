@@ -68,22 +68,11 @@ KAN-Fusion/
 Two encoder branches → KAN fusion → scalar head. **~6.56M trainable params**
 (MatSciBERT ~110M is frozen and excluded).
 
-```
- TEXT (Robocrystallographer description)      GRAPH (crystal structure)
-        │                                            │
- MatSciBERT (FROZEN) last_hidden_state       ALIGNN (from scratch), 4 ALIGNN + 4 GCN, hidden 256
- [B, L≤512, 768]                             mean readout → [B, 256]
-        │                                            │
- TextTokenFinegrain → [B, 256]               graph_proj: Lin 256→256 + LN + GELU + Drop → [B, 256]
- (Lin 768→256 + LN, 1× TransformerEncoder,          │
-  attention-pool via learned query)                 │
-        └──────────────┬──────────────────────────────┘
-                 concat → [B, 512]
-                 pre_kan_norm  LayerNorm(512)
-                 KANLinear1  512 → 256   (B-spline activations)
-                 KANLinear2  256 → 64    (B-spline activations)
-                 head  Linear 64 → 1  →  band gap (eV)
-```
+<p align="center">
+  <img src="KAN-Fusion-Text/architecture.png" alt="KANFuse architecture" width="420">
+</p>
+
+<p align="center"><em>Vector source: <a href="KAN-Fusion-Text/architecture.pdf">architecture.pdf</a></em></p>
 
 - **Text branch** — frozen MatSciBERT (`m3rg-iitd/matscibert`) token sequence →
   `TextTokenFinegrain` (Linear 768→256 + LN; 1× TransformerEncoderLayer, 4 heads, FFN 512,
