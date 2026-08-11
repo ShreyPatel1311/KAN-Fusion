@@ -100,31 +100,13 @@ encoder KANFuse uses internally, evaluated on its own. See `Encoders/Band_ALIGNN
 
 ---
 
-## Analysis highlights (KANFuse)
-
-- **Modality is real, not a distributional artifact.** A *shuffle test* (permute text across
-  materials, keeping the text distribution but breaking this-crystal pairing) shows a
-  reproducible **~0.053 eV** material-specific text contribution. Feeding *wrong* text drops
-  KANFuse (0.267) **below** structure-only ALIGNN (0.240) — the gain is genuinely per-material.
-- **The KAN splines matter, modestly.** Real-data spline pruning: removing all splines
-  (→ SiLU-MLP) costs **+0.042 eV** (~20% of MAE); they are fine calibration, not the core
-  mechanism. On average the KAN behaves near-linearly with a small (~5%) genuinely-nonlinear
-  tail — see `spline_pruning.png` and `top10_strongest_splines.png`.
-
----
-
 ## Caveats & honesty notes
 
 This is single-seed research code; a few results are **not** fully audited yet:
 
-1. **The exact 0.2107 checkpoint was lost** (overwritten by a racing training run). The best
-   *reproducible* weights are **ep40 = 0.2136** — quote that unless a checkpoint is reattached.
-2. **Baselines (CrysMMNet, MatMMFuse, ALIGNN) are as-reported** and should be re-run on the
-   identical seed-0 split before the comparison is treated as definitive.
-3. **Single seed, no error bars.** The margin over published ALIGNN is only ~0.007 eV — inside
+1. **Single seed, no error bars.** The margin over published ALIGNN is only ~0.007 eV — inside
    run-to-run variance. Multi-seed runs are needed for a significance claim.
-4. **R² ≈ 0.90 is flattered** by the zero-inflated (metal-heavy) target; MAE is the honest metric.
-5. **Spline pruning is an ablation, not a retraining** — it does not by itself prove KAN > MLP;
+2. **Spline pruning is an ablation, not a retraining** — it does not by itself prove KAN > MLP;
    a from-scratch MLP-fusion baseline is the key outstanding experiment.
 
 ---
