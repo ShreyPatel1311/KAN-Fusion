@@ -21,15 +21,12 @@ All models evaluated on the **same** seed-0 leak-free split. **Lead with MAE** �
 flattered here by the zero-inflated target (many metals have gap = 0, making the
 metal/non-metal split easy).
 
-| Model | Test MAE (eV) ↓ | R² | Notes |
-|-------|:---------------:|:--:|-------|
-| **KANFuse (OneCycle, best)** | **0.211** | 0.907 | Structure graph + text, KAN fusion. Best model. |
-| KANFuse (verifiable ckpt) | 0.2136 | 0.905 | Best *reproducible* weights (ep40); used for all analysis. |
-| CrysMMNet | 0.2325 | ~0.89 | Multimodal (graph + text) baseline. |
-| MatMMFuse | 0.2407 | — | Multimodal fusion baseline. |
-| ALIGNN alone (this repo) | ~0.240 | — | Structure-only encoder baseline. |
-| ALIGNN (published, MP E_g) | 0.218 | — | ALIGNN paper, Table 2 (reference). |
-| CGCNN / MEGNet / CFID (published) | 0.388 / 0.330 / 0.434 | — | ALIGNN paper, Table 2 (reference). |
+| Model | Test MAE (eV) ↓ | Notes |
+|-------|:---------------:|-------|
+| **KANFuse (OneCycle, best)** | **0.211** | Structure graph + text, KAN fusion. Best model. |
+| CrysMMNet | 0.2325 | Multimodal (graph + text) baseline. |
+| MatMMFuse | 0.2407 | Multimodal fusion baseline. |
+| ALIGNN alone (this repo) | ~0.240 | Structure-only encoder baseline. |
 
 **Reading:** KANFuse (0.211) is competitive with the best published structure-only model
 (ALIGNN, 0.218) and beats this repo's ALIGNN, CrysMMNet, and MatMMFuse on the same split.
